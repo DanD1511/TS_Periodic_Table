@@ -3,7 +3,10 @@ import  { GetAllElementsUseCase  } from "../useCases/elementsUseCase/GetAllEleme
 import  { GetElementsByAtomicNumberUseCase } from "../useCases/elementsUseCase/GetElementsByAtomicNumberUseCase";
 import  { GetGroupElementsUseCase } from "../useCases/groupsUseCase/GetGroupElementsUseCase";
 import  { GetPeriodElementsUseCase } from "../useCases/groupsUseCase/GetPeriodElementsUseCase";
+import { injectable, inject } from "inversify";
+import { TYPES } from "../../ioc/types";
 
+@injectable()
 export class ElementFacade {
     private readonly getAllElementsUseCase: GetAllElementsUseCase;
     private readonly getElementsByAtomicNumberUseCase: GetElementsByAtomicNumberUseCase;
@@ -11,10 +14,10 @@ export class ElementFacade {
     private readonly getPeriodElementsUseCase: GetPeriodElementsUseCase;
 
     constructor(
-        getAllElementsUseCase: GetAllElementsUseCase,
-        getElementsByAtomicNumberUseCase: GetElementsByAtomicNumberUseCase,
-        getGroupElementsUseCase: GetGroupElementsUseCase,
-        getPeriodElementsUseCase: GetPeriodElementsUseCase
+        @inject(TYPES.GetAllElementsUseCase)getAllElementsUseCase: GetAllElementsUseCase,
+        @inject(TYPES.GetElementsByAtomicNumberUseCase)getElementsByAtomicNumberUseCase: GetElementsByAtomicNumberUseCase,
+        @inject(TYPES.GetGroupElementsUseCase)getGroupElementsUseCase: GetGroupElementsUseCase,
+        @inject(TYPES.GetPeriodElementsUseCase)getPeriodElementsUseCase: GetPeriodElementsUseCase
     ) {
         this.getAllElementsUseCase = getAllElementsUseCase;
         this.getElementsByAtomicNumberUseCase = getElementsByAtomicNumberUseCase;

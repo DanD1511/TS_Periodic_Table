@@ -1,10 +1,17 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import "reflect-metadata"; // <--- 1. ¡CRÍTICO! Debe ser la primera línea siempre
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx'; // (Ojo con la extensión si es .tsx)
+import './index.css';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+import { ServiceProvider } from './presentation/context/ServiceContext';
+
+import { container } from './ioc/container';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ServiceProvider container={container}>
+      <App />
+    </ServiceProvider>
+  </React.StrictMode>,
 )

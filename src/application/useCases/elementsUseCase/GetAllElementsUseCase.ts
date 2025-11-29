@@ -1,10 +1,13 @@
+import { injectable, inject } from "inversify";
 import type { Element } from "../../../domain/entities/Element";
 import type { ElementRepository } from "../../contracts/ElementRepository";
+import { TYPES } from "../../../ioc/types";
 
+@injectable()
 export class GetAllElementsUseCase {
     private readonly elementRepository: ElementRepository;
     
-    constructor(elementRepository: ElementRepository) {
+    constructor(@inject(TYPES.ElementRepository)elementRepository: ElementRepository) {
         this.elementRepository = elementRepository;
     }
 

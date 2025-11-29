@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { ElementMapperImp } from "../../infrastructure/services/mappers/ElementMapperImp";
-import { ElementRepositoryImp } from "../../infrastructure/repositories/ElementRepositoryImp";
-import { GetAllElementsUseCase } from "../../application/useCases/elementsUseCase/GetAllElementsUseCase";
+import { useInjection } from "../context/ServiceContext";
+import { TYPES } from "../../ioc/types"; 
+import type { ElementFacade } from "../../application/services/ElementFacade";
 import type { Element } from "../../domain/entities/Element";
 
 export const usePeriodicTable = () => {
@@ -9,12 +9,10 @@ export const usePeriodicTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const mapper = new ElementMapperImp();
-    const repository = new ElementRepositoryImp(mapper);
-    const useCase = new GetAllElementsUseCase(repository);
+  const facade = useInjection<ElementFacade>(TYPES.ElementFacade);
 
-    useCase.execute()
+  useEffect(() => {
+    facade.getAllElements()
       .then((data) => {
         setElements(data);
         setLoading(false);
@@ -23,7 +21,7 @@ export const usePeriodicTable = () => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, []); 
 
   return { elements, loading, error };
 };

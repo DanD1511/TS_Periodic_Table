@@ -2,14 +2,16 @@ import type { Element } from "../../domain/entities/Element";
 import type { ElementDTO } from "../dtos/ElementDTO";
 import type { ElementRepository } from "../../application/contracts/ElementRepository";
 import type { ElementMapper } from "../abstractions/ElementMapper";
+import { injectable, inject } from "inversify";
+import { TYPES } from "../../ioc/types";
 
-
+@injectable()
 export class ElementRepositoryImp implements ElementRepository 
 {
     private elementMapper: ElementMapper;
     private readonly API_URL = "https://raw.githubusercontent.com/Bowserinator/Periodic-Table-JSON/master/PeriodicTableJSON.json";
 
-    constructor(elementMapper: ElementMapper) 
+    constructor(@inject(TYPES.ElementMapper) elementMapper: ElementMapper) 
     {
         this.elementMapper = elementMapper;
     }

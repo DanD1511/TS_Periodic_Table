@@ -4,7 +4,9 @@ import type { ElementCategory } from "../../../domain/enums/ElementCategory"; //
 import type { MatterPhase } from "../../../domain/enums/MatterPhase";
 
 import type { ElementMapper } from "../../abstractions/ElementMapper";
+import { injectable } from "inversify";
 
+@injectable()
 export class ElementMapperImp implements ElementMapper{
     
     toEntity(dto: ElementDTO): Element {
