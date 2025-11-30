@@ -34,21 +34,20 @@ export class ElementRepositoryImp implements ElementRepository
         }
     }
 
-    async GetElementByAtomicNumber(atomicNumber: number): Promise<Element | null> 
-    {
-        console.log("GetElementByAtomicNumber called with atomicNumber:", atomicNumber);
-        throw new Error("Method not implemented.");
+    async GetGroupElements(group: number): Promise<Element[]> {
+        const allElements = await this.GetAllElements();
+        
+        return allElements.filter(e => e.xpos === group);
     }
 
-    async GetGroupElements(group: number): Promise<Element[]> 
-    {
-        console.log("GetGroupElements called with group:", group);
-        throw new Error("Method not implemented.");
+    async GetPeriodElements(period: number): Promise<Element[]> {
+        const allElements = await this.GetAllElements();
+        
+        return allElements.filter(e => e.ypos === period);
     }
 
-    async GetPeriodElements(period: number): Promise<Element[]> 
-    {
-        console.log("GetPeriodElements called with period:", period);
-        throw new Error("Method not implemented.");
+    async GetElementByAtomicNumber(atomicNumber: number): Promise<Element | null> {
+        const allElements = await this.GetAllElements();
+        return allElements.find(e => e.atomicNumber === atomicNumber) || null;
     }
 }
